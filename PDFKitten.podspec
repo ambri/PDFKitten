@@ -9,6 +9,7 @@ Pod::Spec.new do |s|
   s.license       = { :type => 'Public',
                       :text => %Q|This software is provided as is, meaning that we are not responsible for the results of its use.| }
   
+  s.source_files = 'PDFKitten'
   s.requires_arc = false
 
 end
