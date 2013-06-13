@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.summary       = 'A framework for searching PDF documents on iOS.'
   s.homepage      = ''
   s.author        = "Marcus Hedenström"
-  s.source        = { :git  => 'git@github.com:KurtCode/PDFKitten.git' }
+  s.source        = { :git  => 'git@github.com:ohdonpiano/PDFKitten.git' }
   s.license       = { :type => 'Public',
                       :text => %Q|This software is provided as is, meaning that we are not responsible for the results of its use.| }
   
