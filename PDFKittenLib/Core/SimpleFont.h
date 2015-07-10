@@ -12,9 +12,11 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "Font.h"
+#import "PDFFont.h"
+#import "PDFEncodingDifferences.h"
 
-@interface SimpleFont : Font {
+@interface SimpleFont : PDFFont {
+    PDFEncodingDifferences *encodingDifferences;
 }
 
 /* Custom implementation for all simple fonts */
@@ -25,5 +27,8 @@
 
 /* Set encoding, given a font dictionary */
 - (void)setEncodingWithFontDictionary:(CGPDFDictionaryRef)dict;
+
+@property (nonatomic, readonly, retain) PDFEncodingDifferences *encodingDifferences;
+- (void) setupEncodingDifferencesWithEncodingDict:(CGPDFDictionaryRef)encodingDict;
 
 @end

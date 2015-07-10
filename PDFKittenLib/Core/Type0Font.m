@@ -50,7 +50,7 @@
 /* Custom implementation, using descendant fonts */
 - (CGFloat)widthOfCharacter:(unichar)characher withFontSize:(CGFloat)fontSize
 {
-	for (Font *font in self.descendantFonts)
+	for (PDFFont *font in self.descendantFonts)
 	{
 		CGFloat width = [font widthOfCharacter:characher withFontSize:fontSize];
 		if (width > 0) return width;
@@ -63,21 +63,21 @@
     return [[self.descendantFonts lastObject] ligatures];
 }
 
-- (FontDescriptor *)fontDescriptor {
-	Font *descendantFont = [self.descendantFonts lastObject];
+- (PDFFontDescriptor *)fontDescriptor {
+	PDFFont *descendantFont = [self.descendantFonts lastObject];
 	return descendantFont.fontDescriptor;
 }
 
 - (CGFloat)minY
 {
-	Font *descendantFont = [self.descendantFonts lastObject];
+	PDFFont *descendantFont = [self.descendantFonts lastObject];
 	return [descendantFont.fontDescriptor descent];
 }
 
 /* Highest point of any character */
 - (CGFloat)maxY
 {
-	Font *descendantFont = [self.descendantFonts lastObject];
+	PDFFont *descendantFont = [self.descendantFonts lastObject];
 	return [descendantFont.fontDescriptor ascent];
 }
 
@@ -91,15 +91,20 @@
 		
         for (int i = 0; i < stringLength; i+=2)
 		{
-			unichar characterCode = characterCodes[i] << 8 | characterCodes[i+1];
-			unichar characterSelector = [self.toUnicode unicodeCharacter:characterCode];
-            [unicodeString appendFormat:@"%C", characterSelector];
+			const unichar characterCode = (characterCodes[i] << 8) | characterCodes[i+1];
+			const NSUInteger uni = [self.toUnicode unicodeCharacter:characterCode];
+            if (uni == NSNotFound) {                                
+                [unicodeString appendString:@"?"];
+            } else {
+                [unicodeString appendFormat:@"%C", (unichar)uni];
+            }
+        
 		}
 		return unicodeString;
 	}
 	else if ([self.descendantFonts count] > 0)
 	{
-		Font *descendantFont = [self.descendantFonts lastObject];
+		PDFFont *descendantFont = [self.descendantFonts lastObject];
 		return [descendantFont stringWithPDFString:pdfString];
 	}
 	return @"";
@@ -107,13 +112,18 @@
 
 - (NSString *)unicodeWithPDFString:(CGPDFStringRef)pdfString {
     NSMutableString *result;
-	Font *descendantFont = [self.descendantFonts lastObject];
+	PDFFont *descendantFont = [self.descendantFonts lastObject];
     NSString *descendantResult = [descendantFont stringWithPDFString: pdfString];
     if (self.toUnicode) {
         result = [[[NSMutableString alloc] initWithCapacity: [descendantResult length]] autorelease];
         for (int i = 0; i < [descendantResult length]; i++) {
-            unichar character = [self.toUnicode unicodeCharacter:[descendantResult characterAtIndex:i]];
-		 	[result appendFormat:@"%C", character];
+            unichar characterCode = [descendantResult characterAtIndex:i];
+            const NSUInteger uni = [self.toUnicode unicodeCharacter:characterCode];
+            if (uni == NSNotFound) {                
+                [result appendString:@"?"];
+            } else {
+                [result appendFormat:@"%C", (unichar)uni];
+            }
         }        
     } else {
         result = [NSMutableString stringWithString: descendantResult];
@@ -122,7 +132,7 @@
 }
 
 - (NSString *)cidWithPDFString:(CGPDFStringRef)pdfString {
-    Font *descendantFont = [self.descendantFonts lastObject];
+    PDFFont *descendantFont = [self.descendantFonts lastObject];
     return [descendantFont stringWithPDFString: pdfString];
 }
 

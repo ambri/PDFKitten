@@ -1,4 +1,4 @@
-#import "Font.h"
+#import "PDFFont.h"
 
 // Simple fonts
 #import "Type1Font.h"
@@ -33,12 +33,12 @@ typedef const unsigned char CharacterCode;
 #pragma mark 
 
 
-@implementation Font
+@implementation PDFFont
 
 #pragma mark - Initialization
 
 /* Factory method returns a Font object given a PDF font dictionary */
-+ (Font *)fontWithDictionary:(CGPDFDictionaryRef)dictionary
++ (PDFFont *)fontWithDictionary:(CGPDFDictionaryRef)dictionary
 {
 	const char *type = nil;
 	CGPDFDictionaryGetName(dictionary, kTypeKey, &type);
@@ -46,7 +46,7 @@ typedef const unsigned char CharacterCode;
 	const char *subtype = nil;
 	CGPDFDictionaryGetName(dictionary, kFontSubtypeKey, &subtype);
 
-	Font *font = nil;	
+	PDFFont *font = nil;	
 	if (!strcmp(subtype, kType0Key)) {
 		font = [Type0Font alloc];
 	}
@@ -137,7 +137,7 @@ typedef const unsigned char CharacterCode;
 {
 	CGPDFDictionaryRef descriptor;
 	if (!CGPDFDictionaryGetDictionary(dict, kFontDescriptorKey, &descriptor)) return;
-	FontDescriptor *desc = [[FontDescriptor alloc] initWithPDFDictionary:descriptor];
+	PDFFontDescriptor *desc = [[PDFFontDescriptor alloc] initWithPDFDictionary:descriptor];
 	self.fontDescriptor = desc;
 	[desc release];
 }
@@ -153,7 +153,7 @@ typedef const unsigned char CharacterCode;
 {
 	CGPDFStreamRef stream;
 	if (!CGPDFDictionaryGetStream(dict, kToUnicodeKey, &stream)) return;
-	CMap *map = [[CMap alloc] initWithPDFStream:stream];
+	PDFCMap *map = [[PDFCMap alloc] initWithPDFStream:stream];
 	self.toUnicode = map;
 	[map release];
 }
@@ -172,9 +172,9 @@ typedef const unsigned char CharacterCode;
 	return unicodeString;
 }
 
-- (unichar)mappedUnicodeValue:(CharacterCode)character
+- (NSUInteger)mappedUnicodeValue:(CharacterCode)character
 {
-    unichar value = [self.toUnicode unicodeCharacter:character];
+    const NSUInteger value = [self.toUnicode unicodeCharacter:character];
     return (value == NSNotFound) ? value : [self encodedUnicodeValue:character];
 }
 
@@ -205,8 +205,12 @@ typedef const unsigned char CharacterCode;
     for (int i = 0; i < characterCodeCount; i++)
     {
         CharacterCode code = characterCodes[i];
-        unichar value = [self mappedUnicodeValue:code];
-        [string appendFormat:@"%C", value];
+        const NSUInteger uni = [self mappedUnicodeValue:code];
+        if (uni == NSNotFound) {
+            [string appendFormat:@"%c", code];
+        } else {
+            [string appendFormat:@"%C", (unichar)uni];
+        }        
     }
 	
 	return [NSString stringWithString:string];
@@ -228,7 +232,12 @@ typedef const unsigned char CharacterCode;
 		for (int i = 0; i < length; i++)
 		{
             const unsigned char cid = bytes[i];
-		 	[unicodeString appendFormat:@"%C", [self.toUnicode unicodeCharacter:cid]];
+            const NSUInteger uni =[self.toUnicode unicodeCharacter:cid];
+            if (uni == NSNotFound) {
+                [unicodeString appendFormat:@"%c", cid];
+            } else {
+                [unicodeString appendFormat:@"%C", (unichar)uni];
+            }
 		}
 		return unicodeString;
 	}
