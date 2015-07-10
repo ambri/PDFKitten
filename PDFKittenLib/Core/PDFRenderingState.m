@@ -1,7 +1,5 @@
 #import "PDFRenderingState.h"
 
-#define kGlyphSpaceScale 1000
-
 @implementation PDFRenderingState
 
 - (id)init
@@ -22,7 +20,7 @@
 	PDFRenderingState *copy = [[PDFRenderingState alloc] init];
 	copy.lineMatrix = self.lineMatrix;
 	copy.textMatrix = self.textMatrix;
-	copy.leadning = self.leadning;
+	copy.leading = self.leading;
 	copy.wordSpacing = self.wordSpacing;
 	copy.characterSpacing = self.characterSpacing;
 	copy.horizontalScaling = self.horizontalScaling;
@@ -57,7 +55,7 @@
 	[self setTextMatrix:t replaceLineMatrix:YES];
 	if (save)
 	{
-		self.leadning = aLeading;
+		self.leading = aLeading;
 	}
 }
 
@@ -70,13 +68,13 @@
 /* Transforms the rendering state to the start of the next line */
 - (void)newLine
 {
-	[self newLineWithLeading:self.leadning save:NO];
+    [self newLineWithLeading:self.leading save:NO];
 }
 
 /* Convert value to user space */
 - (CGFloat)convertToUserSpace:(CGFloat)value
 {
-	return value * (self.fontSize / kGlyphSpaceScale);
+	return value * (self.fontSize / self.font.unitsPerEm);
 }
 
 /* Converts a size from text space to user space */
@@ -130,11 +128,6 @@
 
 #pragma mark - Memory Management
 
-- (void)dealloc
-{
-	[font release];
-	[super dealloc];
-}
 
-@synthesize characterSpacing, wordSpacing, leadning, textRise, horizontalScaling, font, fontSize, lineMatrix, textMatrix, ctm;
+@synthesize characterSpacing, wordSpacing, leading, textRise, horizontalScaling, font, fontSize, lineMatrix, textMatrix, ctm;
 @end

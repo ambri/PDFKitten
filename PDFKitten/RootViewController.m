@@ -1,11 +1,20 @@
 #import "RootViewController.h"  
 #import "PDFPage.h"
 #import "DocumentsView.h"
-#import "PDFScanner.h"
 #import "PDFFontCollection.h"
 #import "PDFPageDetailsView.h"
 
-@implementation RootViewController
+@interface RootViewController ()
+
+@property (nonatomic) SearchResultsViewController *searchResultsViewController;
+
+@property (nonatomic) UIPopoverController *recentSearchesPopoverController;
+
+@end
+
+@implementation RootViewController {
+    NSInteger pageNumber;
+}
 
 #pragma mark - Initialization
 
@@ -14,7 +23,8 @@
 	if ((self = [super initWithCoder:aDecoder]))
 	{
         NSURL *pdfURL = [NSURL fileURLWithPath:self.documentPath];
-        document = CGPDFDocumentCreateWithURL((CFURLRef)pdfURL);
+        pdfKitten = [PDFKitten loadDocument:pdfURL];
+        [pdfKitten setDelegate:self];
 	}
 	return self;
 }
@@ -23,17 +33,19 @@
 {
     if ([popoverController isEqual:libraryPopover])
     {
-        [libraryPopover release]; libraryPopover = nil;
+         libraryPopover = nil;
     }
 }
 
 - (void)didSelectDocument:(NSURL *)url
 {
 	[libraryPopover dismissPopoverAnimated:YES];
-	[libraryPopover release]; libraryPopover = nil;
-	
-	CGPDFDocumentRelease(document);
-	document = CGPDFDocumentCreateWithURL((CFURLRef)url);
+    libraryPopover = nil;
+
+    pdfKitten = [PDFKitten loadDocument:url];
+    [pdfKitten setDelegate:self];
+    [pageView setSelections:nil];
+    [pageView setPagedHyperlinks:nil];
 	[pageView reloadData];
 }
 
@@ -42,11 +54,11 @@
     if (libraryPopover)
     {
         [libraryPopover dismissPopoverAnimated:NO];
-        [libraryPopover release]; libraryPopover = nil;
+         libraryPopover = nil;
         return;
     }
     
-    DocumentsView *docView = [[[DocumentsView alloc] init] autorelease];
+    DocumentsView *docView = [[DocumentsView alloc] init];
 	docView.delegate = self;
     libraryPopover = [[UIPopoverController alloc] initWithContentViewController:docView];
     libraryPopover.delegate = self;
@@ -57,9 +69,6 @@
 {
 	[super viewDidAppear:animated];
 	
-	// Ask user to connect Dropbox account
-//	DBLoginController *loginController = [[DBLoginController new] autorelease];
-//	[loginController presentFromController:self];
 }
 
 #pragma mark PageViewDelegate
@@ -67,7 +76,7 @@
 /* The number of pages in the current PDF document */
 - (NSInteger)numberOfPagesInPageView:(PageView *)pageView
 {
-	return CGPDFDocumentGetNumberOfPages(document);
+	return [pdfKitten numberOfPages];
 }
 
 - (PDFFontCollection *)activeFontCollection
@@ -82,26 +91,28 @@
 {
 	PDFFontCollection *collection = [self activeFontCollection];
 	PDFPageDetailsView *detailedView = [[PDFPageDetailsView alloc] initWithFont:collection];
-	return [detailedView autorelease];
+	return detailedView;
 }
 
 // TODO: Assign page to either the page or its content view, not both.
 
 /* Page view object for the requested page */
-- (Page *)pageView:(PageView *)aPageView viewForPage:(NSInteger)pageNumber
-{
-	PDFPage *page = (PDFPage *) [aPageView dequeueRecycledPage];
-	if (!page)
-	{
-		page = [[[PDFPage alloc] initWithFrame:CGRectZero] autorelease];
+- (Page *)pageView:(PageView *)aPageView viewForPage:(NSInteger)pNumber {
+    pageNumber = pNumber;
+	PDFPage *page = nil;
+	if (page) {
+        [page setMinimumZoomScale:0.5];
+        [page setZoomScale:1 animated:NO];
+    } else {
+		page = [[PDFPage alloc] initWithFrame:CGRectZero];
 	}
-    
-	page.pageNumber = pageNumber;
-    CGPDFPageRef pdfPage = CGPDFDocumentGetPage(document, pageNumber + 1); // PDF document page numbers are 1-based
+
+    page.pageNumber = pageNumber;
+    CGPDFPageRef pdfPage = [pdfKitten getPage:pageNumber];
+    [pdfKitten findHyperlinksForPage:pageNumber];
     [page setPage:pdfPage];
-	page.keyword = keyword;
     
-	return page;
+    return page;
 }
 
 - (NSString *)keywordForPageView:(PageView *)pageView
@@ -120,19 +131,57 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)aSearchBar
 {
-	[keyword release];
-	keyword = [[aSearchBar text] retain];
-	[pageView setKeyword:keyword];
-	
+	keyword = [aSearchBar text];
+    if ([keyword length] > 0) {
+        [pdfKitten startSearchFromPage:pageNumber withKeyword:keyword];
+        [self.searchResultsViewController setKeyword:keyword];
+    }
+
 	[aSearchBar resignFirstResponder];
 }
 
-#pragma mark Memory Management
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)aSearchBar {
+    if (self.recentSearchesPopoverController == nil) {
+        self.searchResultsViewController = [[SearchResultsViewController alloc] initWithStyle:UITableViewStylePlain];
+        self.searchResultsViewController.delegate = self;
+        
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self.searchResultsViewController];
+        navigationController.navigationBarHidden = TRUE;
 
-- (void)dealloc
-{
-    CGPDFDocumentRelease(document);
-    [super dealloc];
+        // Create the popover controller to contain the navigation controller.
+        UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:navigationController];
+        popover.delegate = self;
+
+        // Ensure the popover is not dismissed if the user taps in the search bar by adding
+        // the search bar to the popover's list of pass-through views.
+        popover.passthroughViews = @[searchBar];
+
+        self.recentSearchesPopoverController = popover;
+    }
+
+    [self.recentSearchesPopoverController presentPopoverFromRect:[searchBar bounds] inView:searchBar permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+}
+
+- (void)scanResults:(NSArray *)selections {
+    [pageView setSelections:selections];
+    [self.searchResultsViewController setResults:selections];
+    [self.searchResultsViewController.tableView reloadData];
+}
+
+- (void)scanResultsUpdated:(NSArray *)selections {
+    [self performSelectorOnMainThread:@selector(scanResults:) withObject:selections waitUntilDone:YES];
+}
+
+- (void)foundHyperlinks:(NSDictionary *)pagedHyperlinks {
+    [pageView setPagedHyperlinks:pagedHyperlinks];
+}
+
+- (void)hyperlinks:(NSDictionary *)pagedHyperlinks {
+    [self performSelectorOnMainThread:@selector(foundHyperlinks:) withObject:pagedHyperlinks waitUntilDone:YES];
+}
+
+- (void)searchSelectionPicked:(PDFSelection*)selection {
+    [pageView setPage:selection.pageNumber-1];
 }
 
 @end

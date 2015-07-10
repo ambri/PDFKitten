@@ -1,4 +1,7 @@
 PDFKitten.xcodeproj/project.xcworkspace/xcuserdata/
 PDFKitten.xcodeproj/xcuserdata/
 .DS_Store
+.idea/
 tmp
+PDFKittenLib-release/
+build/

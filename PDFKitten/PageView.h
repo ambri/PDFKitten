@@ -31,23 +31,20 @@
 
 #pragma mark
 
-@interface PageView : UIScrollView <UIScrollViewDelegate> {
-	NSInteger numberOfPages;
-	NSInteger pageNumber;
-	NSMutableSet *visiblePages;
-	NSMutableSet *recycledPages;
-	NSString *keyword;
-    PDFPageDetailsView *detailedViewController;
-	IBOutlet id<PageViewDelegate> dataSource;
+@interface PageView : UIView <UIScrollViewDelegate> {
+    UIScrollView *_scrollView;
+    
+    NSInteger numberOfPages;
+    NSInteger pageNumber;
+    BOOL verticalScroll;
+    NSMutableSet *visiblePages;
+    IBOutlet id <PageViewDelegate> __unsafe_unretained dataSource;
 }
 
 #pragma mark -
 
 /* Called when user has pressed the info button */
 - (IBAction)detailedInfoButtonPressed:(id)sender;
-
-/* Returns a recycled page, or nil if none exist */
-- (Page *)dequeueRecycledPage;
 
 /* Causes the page view to reload pages */
 - (void)reloadData;
@@ -59,11 +56,18 @@
 - (Page *)pageAtIndex:(NSInteger)index;
 
 /* The page currently visible */
-@property (nonatomic, assign) NSInteger page;
+@property(nonatomic, assign) NSInteger page;
 
 /* Data source for pages */
-@property (nonatomic, assign) id<PageViewDelegate> dataSource;
+@property(nonatomic, unsafe_unretained) id <PageViewDelegate> dataSource;
 
-@property (nonatomic, retain) NSString *keyword;
+- (void)setVerticalScroll:(BOOL)vertical;
 
+- (void)setSelections:(NSArray *)array;
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation;
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)orientation;
+
+- (void)setPagedHyperlinks:(NSDictionary *)pagedHyperlinks;
 @end

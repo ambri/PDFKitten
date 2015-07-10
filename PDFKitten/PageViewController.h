@@ -2,9 +2,9 @@
 #import "PageView.h"
 
 @interface PageViewController : UIViewController <PageViewDelegate> {
-	IBOutlet PageView *pageView;
+    IBOutlet PageView *__unsafe_unretained pageView;
 }
 
-@property (nonatomic, readonly) PageView *pageView;
+@property(unsafe_unretained, nonatomic, readonly) PageView *pageView;
 
 @end

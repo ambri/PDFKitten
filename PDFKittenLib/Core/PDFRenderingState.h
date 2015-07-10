@@ -41,12 +41,12 @@
 /* Text size, spacing, scaling etc. */
 @property (nonatomic, assign) CGFloat characterSpacing;
 @property (nonatomic, assign) CGFloat wordSpacing;
-@property (nonatomic, assign) CGFloat leadning;
+@property (nonatomic, assign) CGFloat leading;
 @property (nonatomic, assign) CGFloat textRise;
 @property (nonatomic, assign) CGFloat horizontalScaling;
 
 /* Font and font size */
-@property (nonatomic, retain) PDFFont *font;
+@property (nonatomic, strong) PDFFont *font;
 @property (nonatomic, assign) CGFloat fontSize;
 
 - (CGFloat) widthOfSpace;

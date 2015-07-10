@@ -11,7 +11,6 @@
 		2C0E15AE13589B0B004096C7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C0E15AD13589B0B004096C7 /* Foundation.framework */; };
 		2C0E15B013589B0B004096C7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C0E15AF13589B0B004096C7 /* CoreGraphics.framework */; };
 		2C1BB5CE168B97960026F266 /* KurtStory.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2C1BB5CB168B91F50026F266 /* KurtStory.txt */; };
-		2C35AD6F167E02E000BA5F79 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C754C9D14B3A1D700105B5E /* SenTestingKit.framework */; };
 		2C35AD70167E02E000BA5F79 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C0E15AB13589B0B004096C7 /* UIKit.framework */; };
 		2C35AD71167E02E000BA5F79 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C0E15AD13589B0B004096C7 /* Foundation.framework */; };
 		2C35AD77167E02E000BA5F79 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2C35AD75167E02E000BA5F79 /* InfoPlist.strings */; };
@@ -31,6 +30,22 @@
 		2CE7BC9D13896EF0009784B9 /* PageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE7BC9B13896EF0009784B9 /* PageView.m */; };
 		2CE7BCAF13896EFB009784B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE7BCA013896EFB009784B9 /* main.m */; };
 		2CE7BCB113896EFB009784B9 /* PDFKittenAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CE7BCA413896EFB009784B9 /* PDFKittenAppDelegate.m */; };
+		2D9B8935F01F80298A6F7A2E /* PDFLinkScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D9B884E0444456A8044FF37 /* PDFLinkScanner.m */; };
+		66398CAA18338CCE000152B3 /* SearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 66398CA918338CCE000152B3 /* SearchResultsViewController.m */; };
+		663C36BA1832820E00ABC161 /* PDFKitten.m in Sources */ = {isa = PBXBuildFile; fileRef = 663C36B91832820E00ABC161 /* PDFKitten.m */; };
+		663C36BE18329E6D00ABC161 /* PDFKittenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 663C36BD18329E6D00ABC161 /* PDFKittenTest.m */; };
+		665BCE071851DF740095F7BE /* hyperlink.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 665BCE061851DF740095F7BE /* hyperlink.pdf */; };
+		665BCE091851DFCF0095F7BE /* LinkScannerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 665BCE081851DFCF0095F7BE /* LinkScannerTest.m */; };
+		666A966A1833F73800509225 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 666A96691833F73800509225 /* CoreText.framework */; };
+		666CAF5A18437C75007A390D /* PDFStringDetector.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 87472C71177DB7DF00899C6C /* PDFStringDetector.h */; };
+		666CAF5B18437C75007A390D /* PDFStringDetectorDelegate.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 87472C73177DB7DF00899C6C /* PDFStringDetectorDelegate.h */; };
+		666CAF5C18437C75007A390D /* PDFRenderingState.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 87472C75177DB7EE00899C6C /* PDFRenderingState.h */; };
+		666CAF5D18437C75007A390D /* RenderingStateStack.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 87472C77177DB7EE00899C6C /* RenderingStateStack.h */; };
+		666CAF5E18437C75007A390D /* PDFScanner.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 87FD1572177DB32200070AAA /* PDFScanner.h */; };
+		666CAF5F18437C75007A390D /* PDFKitten.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 663C36B81832820E00ABC161 /* PDFKitten.h */; };
+		666CAF6018437C75007A390D /* PDFSelection.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 87FD1574177DB32200070AAA /* PDFSelection.h */; };
+		66CB0F7D184E229F00D4384D /* Symbols.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 66CB0F7C184E229F00D4384D /* Symbols.pdf */; };
+		66CB0F7F184E256800D4384D /* SymbolsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 66CB0F7E184E256800D4384D /* SymbolsTest.m */; };
 		87472C74177DB7DF00899C6C /* PDFStringDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 87472C72177DB7DF00899C6C /* PDFStringDetector.m */; };
 		87472C79177DB7EE00899C6C /* PDFRenderingState.m in Sources */ = {isa = PBXBuildFile; fileRef = 87472C76177DB7EE00899C6C /* PDFRenderingState.m */; };
 		87472C7A177DB7EE00899C6C /* RenderingStateStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 87472C78177DB7EE00899C6C /* RenderingStateStack.m */; };
@@ -80,6 +95,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		666CAF5918437C2C007A390D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = include;
+			dstSubfolderSpec = 16;
+			files = (
+				666CAF5A18437C75007A390D /* PDFStringDetector.h in CopyFiles */,
+				666CAF5B18437C75007A390D /* PDFStringDetectorDelegate.h in CopyFiles */,
+				666CAF5C18437C75007A390D /* PDFRenderingState.h in CopyFiles */,
+				666CAF5D18437C75007A390D /* RenderingStateStack.h in CopyFiles */,
+				666CAF5E18437C75007A390D /* PDFScanner.h in CopyFiles */,
+				666CAF5F18437C75007A390D /* PDFKitten.h in CopyFiles */,
+				666CAF6018437C75007A390D /* PDFSelection.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		87FD1533177DAEDA00070AAA /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -96,7 +127,7 @@
 		2C0E15AD13589B0B004096C7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2C0E15AF13589B0B004096C7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2C1BB5CB168B91F50026F266 /* KurtStory.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = KurtStory.txt; sourceTree = "<group>"; };
-		2C35AD6E167E02E000BA5F79 /* PDFKittenTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PDFKittenTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C35AD6E167E02E000BA5F79 /* PDFKittenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PDFKittenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C35AD74167E02E000BA5F79 /* PDFKittenTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PDFKittenTests-Info.plist"; sourceTree = "<group>"; };
 		2C35AD76167E02E000BA5F79 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2C35AD7B167E02E000BA5F79 /* PDFKittenTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PDFKittenTests-Prefix.pch"; sourceTree = "<group>"; };
@@ -105,7 +136,6 @@
 		2C38D8E613EF370700718B0D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		2C47505C13F3E48200BC2DB9 /* DocumentsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DocumentsView.h; path = PDFKitten/DocumentsView.h; sourceTree = SOURCE_ROOT; };
 		2C47505D13F3E48200BC2DB9 /* DocumentsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DocumentsView.m; path = PDFKitten/DocumentsView.m; sourceTree = SOURCE_ROOT; };
-		2C754C9D14B3A1D700105B5E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		2C77F7B31442381300767E6A /* Kurt the Cat.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "Kurt the Cat.pdf"; path = "PDFKitten/Samples/Kurt the Cat.pdf"; sourceTree = SOURCE_ROOT; };
 		2C85558F137B336C00D58482 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2CA0FC9213EEB11B0028DCCD /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = PDFKitten/RootViewController.h; sourceTree = SOURCE_ROOT; };
@@ -129,6 +159,19 @@
 		2CE7BCA313896EFB009784B9 /* PDFKittenAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDFKittenAppDelegate.h; path = PDFKitten/PDFKittenAppDelegate.h; sourceTree = SOURCE_ROOT; };
 		2CE7BCA413896EFB009784B9 /* PDFKittenAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDFKittenAppDelegate.m; path = PDFKitten/PDFKittenAppDelegate.m; sourceTree = SOURCE_ROOT; };
 		2CE7BCAA13896EFB009784B9 /* PDFKitten-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "PDFKitten-Info.plist"; path = "PDFKitten/PDFKitten-Info.plist"; sourceTree = SOURCE_ROOT; };
+		2D9B884E0444456A8044FF37 /* PDFLinkScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDFLinkScanner.m; sourceTree = "<group>"; };
+		2D9B8941494688E5A61AE4C3 /* PDFLinkScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDFLinkScanner.h; sourceTree = "<group>"; };
+		66398CA818338CCE000152B3 /* SearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchResultsViewController.h; path = PDFKitten/SearchResultsViewController.h; sourceTree = SOURCE_ROOT; };
+		66398CA918338CCE000152B3 /* SearchResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchResultsViewController.m; path = PDFKitten/SearchResultsViewController.m; sourceTree = SOURCE_ROOT; };
+		663C36B81832820E00ABC161 /* PDFKitten.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDFKitten.h; sourceTree = "<group>"; };
+		663C36B91832820E00ABC161 /* PDFKitten.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDFKitten.m; sourceTree = "<group>"; };
+		663C36BD18329E6D00ABC161 /* PDFKittenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDFKittenTest.m; sourceTree = "<group>"; };
+		665BCE061851DF740095F7BE /* hyperlink.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = hyperlink.pdf; path = PDFKitten/Samples/hyperlink.pdf; sourceTree = SOURCE_ROOT; };
+		665BCE081851DFCF0095F7BE /* LinkScannerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkScannerTest.m; sourceTree = "<group>"; };
+		666A96691833F73800509225 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		66CB0F7C184E229F00D4384D /* Symbols.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = Symbols.pdf; path = PDFKitten/Samples/Symbols.pdf; sourceTree = SOURCE_ROOT; };
+		66CB0F7E184E256800D4384D /* SymbolsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SymbolsTest.m; sourceTree = "<group>"; };
+		66FD78411832380200D519F4 /* PDFKittenLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PDFKittenLog.h; sourceTree = "<group>"; };
 		87472C71177DB7DF00899C6C /* PDFStringDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDFStringDetector.h; path = Core/PDFStringDetector.h; sourceTree = "<group>"; };
 		87472C72177DB7DF00899C6C /* PDFStringDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDFStringDetector.m; path = Core/PDFStringDetector.m; sourceTree = "<group>"; };
 		87472C73177DB7DF00899C6C /* PDFStringDetectorDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDFStringDetectorDelegate.h; path = Core/PDFStringDetectorDelegate.h; sourceTree = "<group>"; };
@@ -183,6 +226,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				666A966A1833F73800509225 /* CoreText.framework in Frameworks */,
 				87FD158B177DB55800070AAA /* libPDFKittenLib.a in Frameworks */,
 				2C0E15AC13589B0B004096C7 /* UIKit.framework in Frameworks */,
 				2C0E15AE13589B0B004096C7 /* Foundation.framework in Frameworks */,
@@ -196,7 +240,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C35AD6F167E02E000BA5F79 /* SenTestingKit.framework in Frameworks */,
 				2C35AD70167E02E000BA5F79 /* UIKit.framework in Frameworks */,
 				2C35AD71167E02E000BA5F79 /* Foundation.framework in Frameworks */,
 			);
@@ -233,7 +276,7 @@
 			isa = PBXGroup;
 			children = (
 				2CE7BC491389674B009784B9 /* PDFKitten.app */,
-				2C35AD6E167E02E000BA5F79 /* PDFKittenTests.octest */,
+				2C35AD6E167E02E000BA5F79 /* PDFKittenTests.xctest */,
 				87FD1535177DAEDA00070AAA /* libPDFKittenLib.a */,
 			);
 			name = Products;
@@ -242,12 +285,12 @@
 		2C0E15AA13589B0B004096C7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				666A96691833F73800509225 /* CoreText.framework */,
 				2C38D8E613EF370700718B0D /* Security.framework */,
 				2C85558F137B336C00D58482 /* QuartzCore.framework */,
 				2C0E15AB13589B0B004096C7 /* UIKit.framework */,
 				2C0E15AD13589B0B004096C7 /* Foundation.framework */,
 				2C0E15AF13589B0B004096C7 /* CoreGraphics.framework */,
-				2C754C9D14B3A1D700105B5E /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -266,6 +309,7 @@
 		2C0E15B213589B0B004096C7 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				66398CA718338BD2000152B3 /* Search */,
 				2C12935213E585F00090C70F /* PageViewController */,
 				2CA0FC9213EEB11B0028DCCD /* RootViewController.h */,
 				2CA0FC9313EEB11B0028DCCD /* RootViewController.m */,
@@ -299,7 +343,10 @@
 			isa = PBXGroup;
 			children = (
 				2C35AD81167E055A00BA5F79 /* StringDetectorTest.h */,
+				663C36BD18329E6D00ABC161 /* PDFKittenTest.m */,
 				2C35AD82167E055A00BA5F79 /* StringDetectorTest.m */,
+				665BCE081851DFCF0095F7BE /* LinkScannerTest.m */,
+				66CB0F7E184E256800D4384D /* SymbolsTest.m */,
 				2C35AD73167E02E000BA5F79 /* Supporting Files */,
 			);
 			path = PDFKittenTests;
@@ -319,6 +366,8 @@
 		2CA0FC9A13EEB1430028DCCD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				665BCE061851DF740095F7BE /* hyperlink.pdf */,
+				66CB0F7C184E229F00D4384D /* Symbols.pdf */,
 				2C77F7B31442381300767E6A /* Kurt the Cat.pdf */,
 				2CDC3F7A138977C0006CC6FB /* InfoPlist.strings */,
 				2CE7BCAA13896EFB009784B9 /* PDFKitten-Info.plist */,
@@ -334,6 +383,15 @@
 				2CE7BCA013896EFB009784B9 /* main.m */,
 			);
 			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		66398CA718338BD2000152B3 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				66398CA818338CCE000152B3 /* SearchResultsViewController.h */,
+				66398CA918338CCE000152B3 /* SearchResultsViewController.m */,
+			);
+			name = Search;
 			sourceTree = "<group>";
 		};
 		87472C6B177DB6CA00899C6C /* Font */ = {
@@ -437,6 +495,10 @@
 				87472C6B177DB6CA00899C6C /* Font */,
 				87FD1572177DB32200070AAA /* PDFScanner.h */,
 				87FD1573177DB32200070AAA /* PDFScanner.m */,
+				2D9B8941494688E5A61AE4C3 /* PDFLinkScanner.h */,
+				2D9B884E0444456A8044FF37 /* PDFLinkScanner.m */,
+				663C36B81832820E00ABC161 /* PDFKitten.h */,
+				663C36B91832820E00ABC161 /* PDFKitten.m */,
 				87FD1574177DB32200070AAA /* PDFSelection.h */,
 				87FD1575177DB32200070AAA /* PDFSelection.m */,
 				87FD1538177DAEDA00070AAA /* Supporting Files */,
@@ -448,6 +510,7 @@
 			isa = PBXGroup;
 			children = (
 				87FD1549177DB0B000070AAA /* PDFKittenLib-Prefix.pch */,
+				66FD78411832380200D519F4 /* PDFKittenLog.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -489,8 +552,8 @@
 			);
 			name = PDFKittenTests;
 			productName = PDFKittenTests;
-			productReference = 2C35AD6E167E02E000BA5F79 /* PDFKittenTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productReference = 2C35AD6E167E02E000BA5F79 /* PDFKittenTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		87FD1534177DAEDA00070AAA /* PDFKittenLib */ = {
 			isa = PBXNativeTarget;
@@ -499,6 +562,8 @@
 				87FD1531177DAEDA00070AAA /* Sources */,
 				87FD1532177DAEDA00070AAA /* Frameworks */,
 				87FD1533177DAEDA00070AAA /* CopyFiles */,
+				666CAF5918437C2C007A390D /* CopyFiles */,
+				666CAF6118438CC7007A390D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -545,6 +610,8 @@
 				2CDC3F80138977C1006CC6FB /* InfoPlist.strings in Resources */,
 				2CDC3F81138977C1006CC6FB /* MainWindow.xib in Resources */,
 				2CA0FCA613EEB1C00028DCCD /* PageViewController.xib in Resources */,
+				665BCE071851DF740095F7BE /* hyperlink.pdf in Resources */,
+				66CB0F7D184E229F00D4384D /* Symbols.pdf in Resources */,
 				2C77F7B41442381300767E6A /* Kurt the Cat.pdf in Resources */,
 				87D5998F17813C0C0087E81B /* adobe_charset in Resources */,
 				87D5999017813C0C0087E81B /* adobe_glyphs in Resources */,
@@ -576,6 +643,19 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
+		666CAF6118438CC7007A390D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Version 2.0 (updated for Xcode 4, with some fixes)\n# Changes:\n#    - Works with xcode 4, even when running xcode 3 projects (Workarounds for apple bugs)\n#    - Faster / better: only runs lipo once, instead of once per recursion\n#    - Added some debugging statemetns that can be switched on/off by changing the DEBUG_THIS_SCRIPT variable to \"true\"\n#    - Fixed some typos\n#\n# Purpose:\n#   Create a static library for iPhone from within XCode\n#   Because Apple staff DELIBERATELY broke Xcode to make this impossible from the GUI (Xcode 3.2.3 specifically states this in the Release notes!)\n#   ...no, I don't understand why they did this!\n#\n# Author: Adam Martin - http://twitter.com/redglassesapps\n# Based on: original script from Eonil (main changes: Eonil's script WILL NOT WORK in Xcode GUI - it WILL CRASH YOUR COMPUTER)\n#\n# More info: see this Stack Overflow question: http://stackoverflow.com/questions/3520977/build-fat-static-library-device-simulator-using-xcode-and-sdk-4\n\n#################[ Tests: helps workaround any future bugs in Xcode ]########\n#\nDEBUG_THIS_SCRIPT=\"false\"\n\nif [ $DEBUG_THIS_SCRIPT = \"true\" ]\nthen\necho \"########### TESTS #############\"\necho \"Use the following variables when debugging this script; note that they may change on recursions\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"BUILT_PRODUCTS_DIR = $BUILT_PRODUCTS_DIR\"\necho \"CONFIGURATION_TEMP_DIR = $CONFIGURATION_TEMP_DIR\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\nfi\n\n#####################[ part 1 ]##################\n# First, work out the BASESDK version number (NB: Apple ought to report this, but they hide it)\n#    (incidental: searching for substrings in sh is a nightmare! Sob)\n\nSDK_VERSION=$(echo ${SDK_NAME} | grep -o '.\\{3\\}$')\n\n# Next, work out if we're in SIM or DEVICE\n\nif [ ${PLATFORM_NAME} = \"iphonesimulator\" ]\nthen\nOTHER_SDK_TO_BUILD=iphoneos${SDK_VERSION}\nelse\nOTHER_SDK_TO_BUILD=iphonesimulator${SDK_VERSION}\nfi\n\necho \"XCode has selected SDK: ${PLATFORM_NAME} with version: ${SDK_VERSION} (although back-targetting: ${IPHONEOS_DEPLOYMENT_TARGET})\"\necho \"...therefore, OTHER_SDK_TO_BUILD = ${OTHER_SDK_TO_BUILD}\"\n#\n#####################[ end of part 1 ]##################\n\n#####################[ part 2 ]##################\n#\n# IF this is the original invocation, invoke WHATEVER other builds are required\n#\n# Xcode is already building ONE target...\n#\n# ...but this is a LIBRARY, so Apple is wrong to set it to build just one.\n# ...we need to build ALL targets\n# ...we MUST NOT re-build the target that is ALREADY being built: Xcode WILL CRASH YOUR COMPUTER if you try this (infinite recursion!)\n#\n#\n# So: build ONLY the missing platforms/configurations.\n\nif [ \"true\" == ${ALREADYINVOKED:-false} ]\nthen\necho \"RECURSION: I am NOT the root invocation, so I'm NOT going to recurse\"\nelse\n# CRITICAL:\n# Prevent infinite recursion (Xcode sucks)\nexport ALREADYINVOKED=\"true\"\n\necho \"RECURSION: I am the root ... recursing all missing build targets NOW...\"\necho \"RECURSION: ...about to invoke: xcodebuild -configuration \\\"${CONFIGURATION}\\\" -target \\\"${TARGET_NAME}\\\" -sdk \\\"${OTHER_SDK_TO_BUILD}\\\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO\"\nxcodebuild -configuration \"${CONFIGURATION}\" -target \"${TARGET_NAME}\" -sdk \"${OTHER_SDK_TO_BUILD}\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\"\n\nACTION=\"build\"\n\n#Merge all platform binaries as a fat binary for each configurations.\n\n# Calculate where the (multiple) built files are coming from:\nCURRENTCONFIG_DEVICE_DIR=${SYMROOT}/${CONFIGURATION}-iphoneos\nCURRENTCONFIG_SIMULATOR_DIR=${SYMROOT}/${CONFIGURATION}-iphonesimulator\nCURRENTCONFIG_UNIVERSAL_DIR=${SRCROOT}/${PRODUCT_NAME}-release\n\necho \"Taking device build from: ${CURRENTCONFIG_DEVICE_DIR}\"\necho \"Taking simulator build from: ${CURRENTCONFIG_SIMULATOR_DIR}\"\n\nif [ -d \"${CURRENTCONFIG_UNIVERSAL_DIR}\" ]\nthen\necho \"deleting files from release directory ${CURRENTCONFIG_UNIVERSAL_DIR}/*\"\n# Note that no quotes are used around the path, as otherwise the * is not correctly interpreted\nrm -rf ${CURRENTCONFIG_UNIVERSAL_DIR}/* #*/\nelse\necho \"No release repository found checked out. Creating local directory\"\nmkdir \"${CURRENTCONFIG_UNIVERSAL_DIR}\"\nfi\n\n\n#echo \"lipo: for current configuration (${CONFIGURATION}) creating output file: ${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\nlipo -create -output \"${CURRENTCONFIG_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\"\n\n#########\n#\n# Added: StackOverflow suggestion to also copy \"include\" files\n#    (untested, but should work OK)\n#\nif [ -d \"${CURRENTCONFIG_DEVICE_DIR}/include\" ]\nthen\nmkdir -p \"${CURRENTCONFIG_UNIVERSAL_DIR}/${PRODUCT_NAME}-include\"\ncp \"${CURRENTCONFIG_DEVICE_DIR}\"/include/* \"${CURRENTCONFIG_UNIVERSAL_DIR}/${PRODUCT_NAME}-include\" #*/\nfi\nfi\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -587,6 +667,7 @@
 				2CE7BCAF13896EFB009784B9 /* main.m in Sources */,
 				2CE7BCB113896EFB009784B9 /* PDFKittenAppDelegate.m in Sources */,
 				2CA0FC9413EEB11B0028DCCD /* RootViewController.m in Sources */,
+				66398CAA18338CCE000152B3 /* SearchResultsViewController.m in Sources */,
 				2CA0FC9713EEB1210028DCCD /* PDFPage.m in Sources */,
 				2CA0FCA113EEB1B80028DCCD /* Page.m in Sources */,
 				2CA0FCA513EEB1C00028DCCD /* PageViewController.m in Sources */,
@@ -599,7 +680,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66CB0F7F184E256800D4384D /* SymbolsTest.m in Sources */,
 				2C35AD83167E055A00BA5F79 /* StringDetectorTest.m in Sources */,
+				665BCE091851DFCF0095F7BE /* LinkScannerTest.m in Sources */,
+				663C36BE18329E6D00ABC161 /* PDFKittenTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -612,6 +696,7 @@
 				87472C74177DB7DF00899C6C /* PDFStringDetector.m in Sources */,
 				87472C79177DB7EE00899C6C /* PDFRenderingState.m in Sources */,
 				87472C7A177DB7EE00899C6C /* RenderingStateStack.m in Sources */,
+				663C36BA1832820E00ABC161 /* PDFKitten.m in Sources */,
 				87472C85177DB80200899C6C /* FontFile.m in Sources */,
 				87472C86177DB80200899C6C /* PDFCMap.m in Sources */,
 				87472C87177DB80200899C6C /* PDFFont.m in Sources */,
@@ -628,6 +713,7 @@
 				87472CA7177DB83D00899C6C /* Type1Font.m in Sources */,
 				87472CA8177DB83D00899C6C /* Type3Font.m in Sources */,
 				87D5998517813B630087E81B /* PDFEncodingDifferences.m in Sources */,
+				2D9B8935F01F80298A6F7A2E /* PDFLinkScanner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -677,7 +763,6 @@
 		2C0E15DC13589B0C004096C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
@@ -686,6 +771,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -694,7 +780,6 @@
 		2C0E15DD13589B0C004096C7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -710,6 +795,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -720,7 +806,7 @@
 				GCC_PREFIX_HEADER = "PDFKitten/PDFKitten-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "PDFKitten/PDFKitten-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = PDFKitten;
 				WRAPPER_EXTENSION = app;
 			};
@@ -730,6 +816,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -739,7 +826,7 @@
 				GCC_PREFIX_HEADER = "PDFKitten/PDFKitten-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "PDFKitten/PDFKitten-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = PDFKitten;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -753,12 +840,14 @@
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PDFKitten.app/PDFKitten";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -773,7 +862,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
@@ -784,12 +872,14 @@
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PDFKitten.app/PDFKitten";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PDFKittenTests/PDFKittenTests-Prefix.pch";
@@ -799,7 +889,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				VALIDATE_PRODUCT = YES;
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};
@@ -809,6 +898,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
@@ -826,7 +916,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -839,6 +929,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;

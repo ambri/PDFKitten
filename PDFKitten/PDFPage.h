@@ -3,19 +3,17 @@
 
 
 @interface PDFContentView : PageContentView {
-	CGPDFPageRef pdfPage;
+    CGPDFPageRef pdfPage;
     NSString *keyword;
-	NSArray *selections;
-	PDFScanner *scanner;
 }
 
 #pragma mark
 
 - (void)setPage:(CGPDFPageRef)page;
 
-@property (nonatomic, retain) PDFScanner *scanner;
-@property (nonatomic, copy) NSString *keyword;
-@property (nonatomic, copy) NSArray *selections;
+@property(nonatomic, strong) PDFScanner *scanner;
+@property(nonatomic, strong) NSArray *selections;
+@property(nonatomic, strong) NSArray *hyperlinks;
 
 @end
 
@@ -28,6 +26,7 @@
 
 - (void)setPage:(CGPDFPageRef)page;
 
-@property (nonatomic, copy) NSString *keyword;
+- (void)setSelections:(NSArray *)selections;
 
+- (void)setHyperlinks:(NSArray *)hyperlinks;
 @end

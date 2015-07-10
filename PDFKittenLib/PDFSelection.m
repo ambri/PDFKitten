@@ -5,34 +5,13 @@ CGFloat horizontal(CGAffineTransform transform) {
 	return transform.tx / transform.a;
 }
 
-
-@implementation PDFRenderingState (Selection)
-
-- (CGFloat)userSpaceBoundsY {
-    return [self convertToUserSpace:self.font.fontDescriptor.bounds.origin.y];
-}
-
-- (CGFloat)userSpaceBoundsHeight {
-    return [self convertToUserSpace:self.font.fontDescriptor.bounds.size.height];
-}
-
-- (CGFloat)userSpaceAscent {
-	return [self convertToUserSpace:self.font.fontDescriptor.ascent];
-}
-
-- (CGFloat)userSpaceDescent {
-	return [self convertToUserSpace:self.font.fontDescriptor.descent];
-}
-
-@end
-
-
 @implementation PDFSelection
+@synthesize frame, transform;
 
 + (PDFSelection *)selectionWithState:(PDFRenderingState *)state {
 	PDFSelection *selection = [[PDFSelection alloc] init];
 	selection.initialState = state;
-	return [selection autorelease];
+	return selection;
 }
 
 - (CGAffineTransform)transform {
@@ -40,28 +19,11 @@ CGFloat horizontal(CGAffineTransform transform) {
 }
 
 - (CGRect)frame {
-	return CGRectMake(0, self.originY, self.width, self.height);
-}
-
-- (CGFloat)originY {
-    
-    CGFloat result = MIN([self.initialState userSpaceBoundsY], [self.finalState userSpaceBoundsY]);
-    
-    result = MIN(result, self.descent);
-    
-    return result;
+	return CGRectMake(0, self.descent, self.width, self.height);
 }
 
 - (CGFloat)height {
-    
-    CGFloat result = MAX(self.initialState.fontSize, self.finalState.fontSize);
-    
-    result = MAX(result, [self.initialState userSpaceBoundsHeight]);
-    result = MAX(result, [self.finalState userSpaceBoundsHeight]);
-    
-    result = MAX(result, self.ascent - self.descent);
-    
-	return result;
+	return self.ascent - self.descent;
 }
 
 - (CGFloat)width {
@@ -69,23 +31,39 @@ CGFloat horizontal(CGAffineTransform transform) {
 }
 
 - (CGFloat)ascent {
-	return MAX([self.initialState userSpaceAscent], [self.finalState userSpaceAscent]);
+	return MAX([self ascentInUserSpace:self.initialState], [self ascentInUserSpace:self.finalState]);
 }
 
 - (CGFloat)descent {
-	return MIN([self.initialState userSpaceDescent], [self.finalState userSpaceDescent]);
+	return MIN([self descentInUserSpace:self.initialState], [self descentInUserSpace:self.finalState]);
+}
+
+- (CGFloat)ascentInUserSpace:(PDFRenderingState *)state {
+	return state.font.fontDescriptor.ascent * state.fontSize / [state.font unitsPerEm];
+}
+
+- (CGFloat)descentInUserSpace:(PDFRenderingState *)state {
+	return state.font.fontDescriptor.descent * state.fontSize / [state.font unitsPerEm];
 }
 
 - (void)dealloc {
     
     if (_initialState)
-        [_initialState release], _initialState = nil;
+        _initialState = nil;
     
     if (_finalState)
-        [_finalState release], _finalState = nil;
+        _finalState = nil;
 	
-	[super dealloc];
 }
 
-@synthesize frame, transform;
+- (NSString *)description {
+    NSMutableString *description = [NSMutableString stringWithFormat:@"<%@: ", NSStringFromClass([self class])];
+    [description appendFormat:@"foundLocation=%lu", (unsigned long)self.foundLocation];
+    [description appendFormat:@", pageNumber=%lu", (unsigned long)self.pageNumber];
+    [description appendFormat:@", searchContext=%@", self.searchContext];
+    [description appendFormat:@", frame=(%f,%f,%f,%f)", self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.frame.size.height];
+    [description appendString:@">"];
+    return description;
+}
+
 @end

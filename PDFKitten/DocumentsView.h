@@ -5,8 +5,8 @@
 	NSArray *documents;
 	NSDictionary *urlsByName;
 	
-	id delegate;
+	id __unsafe_unretained delegate;
 }
 
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, unsafe_unretained) id delegate;
 @end

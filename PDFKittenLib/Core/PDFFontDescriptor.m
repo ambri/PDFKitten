@@ -21,6 +21,25 @@ const char *kFontFileKey = "FontFile";
 
 @implementation PDFFontDescriptor
 
+- (id)initWithFontRef:(CGFontRef)fontRef andFontName:(NSString*)font {
+    if ((self = [super init])) {
+        self.ascent = CGFontGetAscent(fontRef);
+        self.descent = CGFontGetDescent(fontRef);
+        self.leading = CGFontGetLeading(fontRef);
+        self.capHeight = CGFontGetCapHeight(fontRef);
+        self.xHeight = CGFontGetXHeight(fontRef);
+        //self.averageWidth
+        //self.maxWidth
+        //self.missingWidth
+        //self.flags
+        //self.verticalStemWidth
+        //self.horizontalStemWidth
+        //self.italicAngle
+        self.fontName = font;
+    }
+    return self;
+}
+
 - (id)initWithPDFDictionary:(CGPDFDictionaryRef)dict
 {
 	const char *type = nil;
@@ -33,33 +52,33 @@ const char *kFontFileKey = "FontFile";
 
 	if ((self = [super init]))
 	{
-		CGPDFInteger ascentValue = 0L;
-		CGPDFInteger descentValue = 0L;
-		CGPDFInteger leadingValue = 0L;
-		CGPDFInteger capHeightValue = 0L;
-		CGPDFInteger xHeightValue = 0L;
-		CGPDFInteger averageWidthValue = 0L;
-		CGPDFInteger maxWidthValue = 0L;
-		CGPDFInteger missingWidthValue = 0L;
+		CGPDFReal ascentValue = 0;
+		CGPDFReal descentValue = 0;
+		CGPDFReal leadingValue = 0;
+		CGPDFReal capHeightValue = 0;
+		CGPDFReal xHeightValue = 0;
+		CGPDFReal averageWidthValue = 0;
+		CGPDFReal maxWidthValue = 0;
+		CGPDFReal missingWidthValue = 0;
 		CGPDFInteger flagsValue = 0L;
-		CGPDFInteger stemV = 0L;
-		CGPDFInteger stemH = 0L;
-		CGPDFInteger italicAngleValue = 0L;
+		CGPDFReal stemV = 0;
+		CGPDFReal stemH = 0;
+		CGPDFReal italicAngleValue = 0;
 		const char *fontNameString = nil;
 		CGPDFArrayRef bboxValue = nil;
 
-		CGPDFDictionaryGetInteger(dict, kAscentKey, &ascentValue);
-        CGPDFDictionaryGetInteger(dict, kDescentKey, &descentValue);
-        CGPDFDictionaryGetInteger(dict, kLeadingKey, &leadingValue);
-		CGPDFDictionaryGetInteger(dict, kCapHeightKey, &capHeightValue);
-		CGPDFDictionaryGetInteger(dict, kXHeightKey, &xHeightValue);
-		CGPDFDictionaryGetInteger(dict, kAverageWidthKey, &averageWidthValue);
-		CGPDFDictionaryGetInteger(dict, kMaxWidthKey, &maxWidthValue);
-		CGPDFDictionaryGetInteger(dict, kMissingWidthKey, &missingWidthValue);
+		CGPDFDictionaryGetNumber(dict, kAscentKey, &ascentValue);
+        CGPDFDictionaryGetNumber(dict, kDescentKey, &descentValue);
+        CGPDFDictionaryGetNumber(dict, kLeadingKey, &leadingValue);
+		CGPDFDictionaryGetNumber(dict, kCapHeightKey, &capHeightValue);
+		CGPDFDictionaryGetNumber(dict, kXHeightKey, &xHeightValue);
+		CGPDFDictionaryGetNumber(dict, kAverageWidthKey, &averageWidthValue);
+		CGPDFDictionaryGetNumber(dict, kMaxWidthKey, &maxWidthValue);
+		CGPDFDictionaryGetNumber(dict, kMissingWidthKey, &missingWidthValue);
 		CGPDFDictionaryGetInteger(dict, kFlagsKey, &flagsValue);
-		CGPDFDictionaryGetInteger(dict, kStemVKey, &stemV);
-        CGPDFDictionaryGetInteger(dict, kStemHKey, &stemH);
-        CGPDFDictionaryGetInteger(dict, kItalicAngleKey, &italicAngleValue);
+		CGPDFDictionaryGetNumber(dict, kStemVKey, &stemV);
+        CGPDFDictionaryGetNumber(dict, kStemHKey, &stemH);
+        CGPDFDictionaryGetNumber(dict, kItalicAngleKey, &italicAngleValue);
         CGPDFDictionaryGetName(dict, kFontNameKey, &fontNameString);
 		CGPDFDictionaryGetArray(dict, kFontBBoxKey, &bboxValue);
         
@@ -75,15 +94,15 @@ const char *kFontFileKey = "FontFile";
         self.verticalStemWidth = stemV;
         self.horizontalStemWidth = stemH;
         self.italicAngle = italicAngleValue;
-        self.fontName = [NSString stringWithUTF8String:fontNameString];
+        self.fontName = @(fontNameString);
 
 		if (CGPDFArrayGetCount(bboxValue) == 4)
 		{
-			CGPDFInteger x = 0, y = 0, width = 0, height = 0;
-			CGPDFArrayGetInteger(bboxValue, 0, &x);
-			CGPDFArrayGetInteger(bboxValue, 1, &y);
-			CGPDFArrayGetInteger(bboxValue, 2, &width);
-			CGPDFArrayGetInteger(bboxValue, 3, &height);
+			CGPDFReal x = 0, y = 0, width = 0, height = 0;
+			CGPDFArrayGetNumber(bboxValue, 0, &x);
+			CGPDFArrayGetNumber(bboxValue, 1, &y);
+			CGPDFArrayGetNumber(bboxValue, 2, &width);
+			CGPDFArrayGetNumber(bboxValue, 3, &height);
 			self.bounds = CGRectMake(x, y, width, height);
 		}
 		
@@ -91,14 +110,13 @@ const char *kFontFileKey = "FontFile";
 		if (CGPDFDictionaryGetStream(dict, kFontFileKey, &fontFileStream))
 		{
 			CGPDFDataFormat format;
-			NSData *data = (NSData *) CGPDFStreamCopyData(fontFileStream, &format);
+			NSData *data = (NSData *) CFBridgingRelease(CGPDFStreamCopyData(fontFileStream, &format));
 			/*
 	 		NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 			path = [path stringByAppendingPathComponent:@"fontfile"];
 			[data writeToFile:path atomically:YES];
 			  */
 			fontFile = [[FontFile alloc] initWithData:data];
-			[data release];
 		}
 
 	}
@@ -142,12 +160,6 @@ const char *kFontFileKey = "FontFile";
 
 #pragma mark Memory Management
 
-- (void)dealloc
-{
-	[fontFile release];
-	[fontName release];
-	[super dealloc];
-}
 
 @synthesize ascent, descent, bounds, leading, capHeight, averageWidth, maxWidth, missingWidth, xHeight, flags, verticalStemWidth, horizontalStemWidth, italicAngle, fontName;
 @synthesize fontFile;

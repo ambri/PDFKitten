@@ -28,13 +28,15 @@ typedef enum FontFlags
 	CGFloat maxWidth;
 	CGFloat missingWidth;
 	CGFloat verticalStemWidth;
-	CGFloat horizontalStemHeigth;
+	CGFloat horizontalStemHeight;
 	CGFloat italicAngle;
 	CGRect bounds;
 	NSUInteger flags;
 	NSString *fontName;
 	FontFile *fontFile;
 }
+
+- (id)initWithFontRef:(CGFontRef)fontRef andFontName:(NSString*)fontName;
 
 /* Initialize a descriptor using a FontDescriptor dictionary */
 - (id)initWithPDFDictionary:(CGPDFDictionaryRef)dict;

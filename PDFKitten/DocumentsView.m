@@ -28,7 +28,7 @@
 	{
 		NSString *title = [[docURL lastPathComponent] stringByDeletingPathExtension];
 		[names addObject:title];
-		[urls setObject:docURL forKey:title];
+		urls[title] = docURL;
 	}
 
 	documents = [[NSArray alloc] initWithArray:[names sortedArrayUsingSelector:@selector(compare:)]];
@@ -66,18 +66,18 @@
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
 	if (!cell)
 	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier] autorelease];
+		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
 	}
-	NSString *title = [documents objectAtIndex:indexPath.row];
+	NSString *title = documents[indexPath.row];
 	cell.textLabel.text = title;
-	cell.detailTextLabel.text = [[urlsByName objectForKey:title] relativePath];
+	cell.detailTextLabel.text = [urlsByName[title] relativePath];
 	return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSString *title = [documents objectAtIndex:indexPath.row];
-	NSURL *url = [urlsByName objectForKey:title];
+	NSString *title = documents[indexPath.row];
+	NSURL *url = urlsByName[title];
 
 	if ([delegate respondsToSelector:@selector(didSelectDocument:)])
 	{
@@ -88,12 +88,6 @@
 
 #pragma mark Memory Management
 
-- (void)dealloc
-{
-	[tableViewController release];
-	[documents release];
-	[super dealloc];
-}
 
 @synthesize delegate;
 @end

@@ -5,12 +5,12 @@
 + (PDFStringDetector *)detectorWithKeyword:(NSString *)keyword delegate:(id<PDFStringDetectorDelegate>)delegate {
 	PDFStringDetector *detector = [[PDFStringDetector alloc] initWithKeyword:keyword];
 	detector.delegate = delegate;
-	return [detector autorelease];
+	return detector;
 }
 
 - (id)initWithKeyword:(NSString *)string {
 	if (self = [super init]) {
-        keyword = [[string lowercaseString] retain];
+        keyword = [string lowercaseString];
         //self.unicodeContent = [NSMutableString string];
 	}
 
@@ -24,11 +24,15 @@
         //[unicodeContent appendString:lowercaseString];
     }
 
-    while (position < inputString.length) {
+    while (position < inputString.length && [keyword length] > 0) {
 		unichar inputCharacter = [inputString characterAtIndex:position];
 		unichar actualCharacter = [lowercaseString characterAtIndex:position++];
-        unichar expectedCharacter = [keyword characterAtIndex:keywordPosition];
-
+        unichar expectedCharacter = 0;
+        if ([keyword length] > 0 && keywordPosition < [keyword length]) {
+            expectedCharacter = [keyword characterAtIndex:keywordPosition];
+        }
+        actualCharacter = [self verifyActualCharacter:actualCharacter withSimilarityTo:expectedCharacter];
+        
         if (actualCharacter != expectedCharacter) {
             if (keywordPosition > 0) {
                 // Read character again
@@ -66,9 +70,28 @@
     return inputString;
 }
 
+- (unichar)verifyActualCharacter:(unichar)actualCharacter withSimilarityTo:(unichar)expectedCharacter {
+    if (actualCharacter == [@"\u00ad" characterAtIndex:0] && expectedCharacter == '-') {
+        actualCharacter = '-';
+    }
+    if (actualCharacter == [@"\u201c" characterAtIndex:0] && expectedCharacter == '"') {
+        actualCharacter = '"';
+    }
+    if (actualCharacter == [@"\u201d" characterAtIndex:0] && expectedCharacter == '"') {
+        actualCharacter = '"';
+    }
+    if (actualCharacter == [@"\u2018" characterAtIndex:0] && expectedCharacter == '\'') {
+        actualCharacter = '\'';
+    }
+    if (actualCharacter == [@"\u2019" characterAtIndex:0] && expectedCharacter == '\'') {
+        actualCharacter = '\'';
+    }
+
+    return actualCharacter;
+}
+
 - (void)setKeyword:(NSString *)kword {
-    [keyword release];
-    keyword = [[kword lowercaseString] retain];
+    keyword = [kword lowercaseString];
 
     keywordPosition = 0;
 }
@@ -77,11 +100,6 @@
     keywordPosition = 0;
 }
 
-- (void)dealloc {
-    //[unicodeContent release];
-	[keyword release];
-	[super dealloc];
-}
 
 @synthesize delegate; //, unicodeContent;
 @end

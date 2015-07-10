@@ -6,13 +6,13 @@
 /* Applier function for font dictionaries */
 void didScanFont(const char *key, CGPDFObjectRef object, void *collection)
 {
-	if (!CGPDFObjectGetType(object) == kCGPDFObjectTypeDictionary) return;
+	if (CGPDFObjectGetType(object) != kCGPDFObjectTypeDictionary) return;
 	CGPDFDictionaryRef dict;
 	if (!CGPDFObjectGetValue(object, kCGPDFObjectTypeDictionary, &dict)) return;
 	PDFFont *font = [PDFFont fontWithDictionary:dict];
 	if (!font) return;
-	NSString *name = [NSString stringWithUTF8String:key];
-	[(NSMutableDictionary *)collection setObject:font forKey:name];
+	NSString *name = @(key);
+	((__bridge NSMutableDictionary *)collection)[name] = font;
 }
 
 /* Initialize with a font collection dictionary */
@@ -22,7 +22,7 @@ void didScanFont(const char *key, CGPDFObjectRef object, void *collection)
 	{
 		fonts = [[NSMutableDictionary alloc] init];
 		// Enumerate the Font resource dictionary
-		CGPDFDictionaryApplyFunction(dict, didScanFont, fonts);
+		CGPDFDictionaryApplyFunction(dict, didScanFont, (__bridge void *)(fonts));
 
 		NSMutableArray *namesArray = [NSMutableArray array];
 		for (NSString *name in [fonts allKeys])
@@ -30,7 +30,7 @@ void didScanFont(const char *key, CGPDFObjectRef object, void *collection)
 			[namesArray addObject:name];
 		}
 
-		names = [[namesArray sortedArrayUsingSelector:@selector(compare:)] retain];
+		names = [namesArray sortedArrayUsingSelector:@selector(compare:)];
 	}
 	return self;
 }
@@ -44,17 +44,11 @@ void didScanFont(const char *key, CGPDFObjectRef object, void *collection)
 /* Return the specified font */
 - (PDFFont *)fontNamed:(NSString *)fontName
 {
-	return [fonts objectForKey:fontName];
+	return fonts[fontName];
 }
 
 #pragma mark - Memory Management
 
-- (void)dealloc
-{
-	[names release];
-	[fonts release];
-	[super dealloc];
-}
 
 @synthesize names;
 @end

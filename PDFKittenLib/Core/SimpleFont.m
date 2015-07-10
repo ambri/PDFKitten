@@ -14,6 +14,7 @@
 	return self;
 }
 
+
 /* Custom implementation for all simple fonts */
 - (void)setWidthsWithFontDictionary:(CGPDFDictionaryRef)dict
 {
@@ -29,9 +30,9 @@
 	{
 		CGPDFReal width;
 		if (!CGPDFArrayGetNumber(array, i, &width)) continue;
-		NSNumber *key = [NSNumber numberWithInt:firstChar+i];
-		NSNumber *value = [NSNumber numberWithFloat:width];
-		[widthsDict setObject:value forKey:key];
+		NSNumber *key = @(firstChar+i);
+		NSNumber *value = @(width);
+		widthsDict[key] = value;
 	}
 	self.widths = widthsDict;
 }
@@ -105,7 +106,7 @@
     NSData *rawBytes = [NSData dataWithBytes:bytes length:length];
 	NSString *string = [[NSString alloc] initWithData:rawBytes encoding:nativeEncoding(self.encoding)];
                     
-	return [string autorelease];
+	return string;
 }
 
 /* Set encoding with name or dictionary */
@@ -218,11 +219,6 @@
     return result;
 }
 
-- (void) dealloc
-{
-    [encodingDifferences release];
-    [super dealloc];    
-}
 
 @synthesize encodingDifferences;
 

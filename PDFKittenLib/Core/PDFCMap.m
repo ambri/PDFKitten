@@ -23,11 +23,9 @@ static NSValue *rangeValue(NSUInteger from, NSUInteger to)
 
 - (id)initWithPDFStream:(CGPDFStreamRef)stream
 {
-	NSData *data = (NSData *) CGPDFStreamCopyData(stream, nil);
+	NSData *data = (NSData *) CFBridgingRelease(CGPDFStreamCopyData(stream, nil));
 	NSString *text = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     id obj = [self initWithString:text];
-    [text release];
-    [data release];
     return obj;
 }
 
@@ -60,7 +58,7 @@ static NSValue *rangeValue(NSUInteger from, NSUInteger to)
 		NSRange range = [rangeValue rangeValue];
 		if (cid >= range.location && cid <= NSMaxRange(range))
 		{
-			NSNumber *offsetValue = [self.characterRangeMappings objectForKey:rangeValue];
+			NSNumber *offsetValue = (self.characterRangeMappings)[rangeValue];
             return [offsetValue unsignedIntegerValue] + cid - range.location;
 		}
 	}
@@ -90,7 +88,7 @@ static NSValue *rangeValue(NSUInteger from, NSUInteger to)
     if (result != NSNotFound)
         return result;
 
-    NSArray *keys = [self.characterMappings allKeysForObject:[NSNumber numberWithInt:unicode]];
+    NSArray *keys = [self.characterMappings allKeysForObject:@(unicode)];
     if (keys.count) {
         if (keys.count > 1) {
             NSLog(@"more keys for character %C keys = %@", unicode, keys);
@@ -129,7 +127,7 @@ enum {
                 s = [s stringByReplacingOccurrencesOfString:@" " withString:@""];
                 NSScanner *hexScaner = [NSScanner scannerWithString:s];
                 
-                NSUInteger value;
+                unsigned value;
                 if (![hexScaner scanHexInt:&value])
                     break;
                 [ma addObject:@(value)];                
@@ -229,14 +227,6 @@ enum {
 	return characterRangeMappings;
 }
 
-- (void)dealloc
-{
-    [characterMappings release];
-    [characterRangeMappings release];
-	[codeSpaceRanges release];
-    //[_debugString release];
-	[super dealloc];
-}
 
 @synthesize codeSpaceRanges, characterMappings, characterRangeMappings;
 @end

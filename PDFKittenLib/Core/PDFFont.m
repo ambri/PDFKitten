@@ -69,8 +69,7 @@ typedef const unsigned char CharacterCode;
 		font = [CIDType2Font alloc];
 	}
 	
-	[[font initWithFontDictionary:dictionary] autorelease];
-	return font;
+	return [font initWithFontDictionary:dictionary];
 }
 
 /* Initialize with font dictionary */
@@ -91,7 +90,7 @@ typedef const unsigned char CharacterCode;
 		const char *fontName = nil;
 		if (CGPDFDictionaryGetName(dict, kBaseFontKey, &fontName))
 		{
-			self.baseFont = [NSString stringWithCString:fontName encoding:NSUTF8StringEncoding];
+			self.baseFont = @(fontName);
 		}
 		
 		// NOTE: Any furhter initialization is performed by the appropriate subclass
@@ -113,7 +112,7 @@ typedef const unsigned char CharacterCode;
 		// TODO: Also get differences from font encoding dictionary
 	}
 
-	[self setEncodingNamed:[NSString stringWithCString:encodingName encoding:NSUTF8StringEncoding]];
+	[self setEncodingNamed:@(encodingName)];
 }
 
 - (void)setEncodingNamed:(NSString *)encodingName
@@ -139,7 +138,6 @@ typedef const unsigned char CharacterCode;
 	if (!CGPDFDictionaryGetDictionary(dict, kFontDescriptorKey, &descriptor)) return;
 	PDFFontDescriptor *desc = [[PDFFontDescriptor alloc] initWithPDFDictionary:descriptor];
 	self.fontDescriptor = desc;
-	[desc release];
 }
 
 /* Populate the widths array given font dictionary */
@@ -155,7 +153,6 @@ typedef const unsigned char CharacterCode;
 	if (!CGPDFDictionaryGetStream(dict, kToUnicodeKey, &stream)) return;
 	PDFCMap *map = [[PDFCMap alloc] initWithPDFStream:stream];
 	self.toUnicode = map;
-	[map release];
 }
 
 #pragma mark Font Property Accessors
@@ -218,8 +215,8 @@ typedef const unsigned char CharacterCode;
 
 - (NSString *)cidWithPDFString:(CGPDFStringRef)pdfString {
     // Copy PDFString to NSString
-    NSString *string = (NSString *) CGPDFStringCopyTextString(pdfString);
-	return [string autorelease];
+    NSString *string = (NSString *) CFBridgingRelease(CGPDFStringCopyTextString(pdfString));
+	return string;
 }
 
 - (NSString *)unicodeWithPDFString:(CGPDFStringRef)pdfString
@@ -261,8 +258,8 @@ typedef const unsigned char CharacterCode;
 /* Width of the given character (CID) scaled to fontsize */
 - (CGFloat)widthOfCharacter:(unichar)character withFontSize:(CGFloat)fontSize
 {
-	NSNumber *key = [NSNumber numberWithInt:character];
-	NSNumber *width = [self.widths objectForKey:key];
+	NSNumber *key = @(character);
+    NSNumber *width = (self.widths)[key];
 	return [width floatValue] * fontSize;
 }
 
@@ -272,12 +269,11 @@ typedef const unsigned char CharacterCode;
 	if (!ligatures)
 	{
 		// Mapping ligature Unicode character values to strings
-		ligatures = [NSDictionary dictionaryWithObjectsAndKeys:
-					 @"ff", [NSString stringWithFormat:@"%C", (unichar) 0xfb00],
-					 @"fi", [NSString stringWithFormat:@"%C", (unichar) 0xfb01],
-					 @"fl", [NSString stringWithFormat:@"%C", (unichar) 0xfb02],
-					 @"ae", [NSString stringWithFormat:@"%C", (unichar) 0x00e6],
-					 @"oe", [NSString stringWithFormat:@"%C", (unichar) 0x0153], nil];
+		ligatures = @{[NSString stringWithFormat:@"%C", (unichar) 0xfb00]: @"ff",
+					 [NSString stringWithFormat:@"%C", (unichar) 0xfb01]: @"fi",
+					 [NSString stringWithFormat:@"%C", (unichar) 0xfb02]: @"fl",
+					 [NSString stringWithFormat:@"%C", (unichar) 0x00e6]: @"ae",
+					 [NSString stringWithFormat:@"%C", (unichar) 0x0153]: @"oe"};
 	}
 
 	return ligatures;
@@ -294,10 +290,10 @@ typedef const unsigned char CharacterCode;
 	NSMutableString *string = [NSMutableString string];
 	[string appendFormat:@"%@ {\n", self.baseFont];
 	[string appendFormat:@"\ttype = %@\n", [self classForKeyedArchiver]];
-	[string appendFormat:@"\tcharacter widths = %d\n", [self.widths count]];
+	[string appendFormat:@"\tcharacter widths = %lu\n", (unsigned long)[self.widths count]];
 	[string appendFormat:@"\ttoUnicode = %d\n", (self.toUnicode != nil)];
 	if (self.descendantFonts) {
-		[string appendFormat:@"\tdescendant fonts = %d\n", [self.descendantFonts count]];
+		[string appendFormat:@"\tdescendant fonts = %lu\n", (unsigned long)[self.descendantFonts count]];
 	}
 	[string appendFormat:@"}\n"];
 	return string;
@@ -309,23 +305,22 @@ typedef const unsigned char CharacterCode;
 	NSString *replacement = nil;
 	for (NSString *ligature in self.ligatures)
 	{
-		replacement = [self.ligatures objectForKey:ligature];
+		replacement = (self.ligatures)[ligature];
 		if (!replacement) continue;
 		string = [string stringByReplacingOccurrencesOfString:ligature withString:replacement];
 	}
 	return string;
 }
 
-#pragma mark Memory Management
+#define kGlyphSpaceScale 1000
 
-- (void)dealloc
-{
-	[toUnicode release];
-	[widths release];
-	[fontDescriptor release];
-	[baseFont release];
-	[super dealloc];
+- (CGFloat)unitsPerEm {
+    return kGlyphSpaceScale;
 }
 
+#pragma mark Memory Management
+
+
 @synthesize fontDescriptor, widths, toUnicode, widthsRange, baseFont, baseFontName, encoding, descendantFonts;
+
 @end

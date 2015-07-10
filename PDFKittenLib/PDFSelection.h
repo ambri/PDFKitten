@@ -6,6 +6,8 @@
 
 + (PDFSelection *)selectionWithState:(PDFRenderingState *)state;
 
+- (NSString *)description;
+
 @property (nonatomic, readonly) CGRect frame;
 @property (nonatomic, readonly) CGAffineTransform transform;
 
@@ -18,5 +20,8 @@
 @property (nonatomic, readonly) CGFloat ascent;
 
 @property (nonatomic, readwrite) NSUInteger foundLocation;
+
+@property (nonatomic, readwrite) NSUInteger pageNumber;
+@property (nonatomic, strong) NSString *searchContext;
 
 @end
